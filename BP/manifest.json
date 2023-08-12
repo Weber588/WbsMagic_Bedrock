@@ -1,0 +1,68 @@
+{
+	"format_version": 2,
+	"metadata": {
+		"authors": [
+			"Weber588"
+		],
+		"generated_with": {
+			"bridge": [
+				"2.6.1"
+			],
+			"dash": [
+				"0.10.10"
+			]
+		}
+	},
+	"header": {
+    "description": "Test addon for magic items.",
+    "name": "WbsMagic",
+		"min_engine_version": [
+			1,
+			20,
+			10
+		],
+		"uuid": "6b45aab9-4437-487c-a018-e47abc2c1f4c",
+		"version": [
+			1,
+			0,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "c0a70f77-0660-4865-b510-2509d17fc987",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+    {
+      "description": "Script resources",
+      "type": "script",
+      "language": "javascript",
+      "uuid": "853ae938-063f-4411-ac57-60f6c8adfd0f",
+      "version": [1, 0, 0],
+      "entry": "scripts/main.js"
+    }
+	],
+	"dependencies": [
+		{
+			"uuid": "3d77d4ff-2d64-47af-9d07-65cd0812754c",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"module_name": "@minecraft/server",
+			"version": "1.4.0-beta"
+		},
+		{
+			"module_name": "@minecraft/server-gametest",
+			"version": "1.0.0-beta"
+		}
+	]
+}

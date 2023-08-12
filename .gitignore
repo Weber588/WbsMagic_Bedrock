@@ -1,0 +1,13 @@
+node_modules/
+
+Desktop.ini    
+.DS_Store 
+!.bridge/
+.bridge/*
+!.bridge/compiler/
+!.bridge/extensions
+builds
+
+BP/scripts/
+*.mcaddon
+*.mcpack

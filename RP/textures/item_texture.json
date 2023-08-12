@@ -1,0 +1,9 @@
+{
+	"resource_pack_name": "WbsMagic",
+	"texture_name": "atlas.items",
+	"texture_data": {
+		"wbsmagic_simple_wand": {
+			"textures": "textures/items/simple_wand"
+		}
+	}
+}

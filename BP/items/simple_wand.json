@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.100",
+  "minecraft:item": {
+    "description": {
+      "identifier": "wbsmagic:simple_wand",
+      "category": "equipment"
+    },
+    "components": {
+			"minecraft:display_name": {
+				"value": "Simple Wand\n§o§7Unattuned§r"
+			},
+      "minecraft:hand_equipped": true,
+      "minecraft:icon": {
+        "texture": "wbsmagic_simple_wand"
+      },
+      "minecraft:use_duration": 15,
+      "minecraft:hover_text_color": "light_purple",
+      "minecraft:chargeable": {
+        "movement_modifier": 0.75,
+        "on_complete": "cast"
+      },
+      "minecraft:cooldown":{
+        "category" : "wbsmagic:cast",
+        "duration" : 0.2
+    }
+    },
+    "events": {
+      "cast": {
+        "condition": "query.remaining_durability > 0",
+        "damage": {
+          "type": "none",
+          "amount": 1,
+          "target": "self"
+        }
+      }
+    }
+  }
+}

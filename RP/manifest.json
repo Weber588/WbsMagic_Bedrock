@@ -1,0 +1,42 @@
+{
+	"format_version": 2,
+	"metadata": {
+		"authors": [
+			"Weber588"
+		],
+		"generated_with": {
+			"bridge": [
+				"2.6.1"
+			],
+			"dash": [
+				"0.10.10"
+			]
+		}
+	},
+	"header": {
+		"name": "WbsMagic",
+		"description": "",
+		"min_engine_version": [
+			1,
+			20,
+			10
+		],
+		"uuid": "3d77d4ff-2d64-47af-9d07-65cd0812754c",
+		"version": [
+			1,
+			0,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "resources",
+			"uuid": "17376f88-770f-4847-bbc5-cc85ea85411d",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	]
+}
