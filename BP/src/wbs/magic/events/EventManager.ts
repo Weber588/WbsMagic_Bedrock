@@ -1,25 +1,40 @@
-import { ItemUseBeforeEvent, world } from "@minecraft/server";
+import { EntitySpawnAfterEvent, ItemUseBeforeEvent, world } from "@minecraft/server";
 import { CastEvent } from "./CastEvent";
 
 export class DuplicateEventRegistrationError extends Error {}
 
 export class EventManager {
+
+    public static readonly USE_INSTANT = "use_instant";
+
+    public static readonly USE_CHARGE_START = "use_charge_start";
+    public static readonly USE_CHARGE_STOP = "use_charge_stop";
+    public static readonly USE_CHARGE_COMPLETE = "use_charge_complete";
+
+    public static readonly PUNCH_ENTITY = "punch_entity";
+    public static readonly PUNCH_BLOCK = "punch_block";
+
     private constructor() {}
 
     private static readonly CAST_EVENTS = new Map<string, CastEvent<any>>();
 
     public static registerDefaultEvents() {
-        this.registerEvent("use_instant", new CastEvent(world.beforeEvents.itemUse.subscribe));
+        this.registerEvent(new CastEvent(EventManager.USE_INSTANT, world.beforeEvents.itemUse));
+        world.afterEvents.entitySpawn.subscribe((event: EntitySpawnAfterEvent) => {
+            if (event.entity.typeId !== "") {
+                
+            }
+        });
 
-        this.registerEvent("use_charge_start", new CastEvent(world.afterEvents.itemStartUse.subscribe));
-        this.registerEvent("use_charge_stop", new CastEvent(world.afterEvents.itemStopUse.subscribe));
-        this.registerEvent("use_charge_complete", new CastEvent(world.afterEvents.itemCompleteUse.subscribe));
+        this.registerEvent(new CastEvent(EventManager.USE_CHARGE_START, world.afterEvents.itemStartUse));
+        this.registerEvent(new CastEvent(EventManager.USE_CHARGE_STOP, world.afterEvents.itemStopUse));
+        this.registerEvent(new CastEvent(EventManager.USE_CHARGE_COMPLETE, world.afterEvents.itemCompleteUse));
 
-        this.registerEvent("punch_entity", new CastEvent(world.afterEvents.entityHitEntity.subscribe));
-        this.registerEvent("punch_block", new CastEvent(world.afterEvents.entityHitBlock.subscribe));
+        this.registerEvent(new CastEvent(EventManager.PUNCH_ENTITY, world.afterEvents.entityHitEntity));
+        this.registerEvent(new CastEvent(EventManager.PUNCH_BLOCK, world.afterEvents.entityHitBlock));
     }
 
-    public static registerEvent(key: string, castEvent: CastEvent<any>) {
+    public static registerEvent(castEvent: CastEvent<any>, key: string = castEvent.id) {
         key = key.toLowerCase();
 
         if (this.CAST_EVENTS.has(key)) {

@@ -5,6 +5,7 @@
 :: Deployment target for copying BP and RP raw outputs. Excludes /src/ folders.
 :: Can be set to the absolute root of a bedrock server to prepare for a restart (still requires uuids to be added to world)
 set target=C:\Users\idont\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\!Servers\Test1\
+set serverStart=%target%bedrock_server.exe
 set BPtarget=%target%behavior_packs
 set RPtarget=%target%resource_packs
 
@@ -31,12 +32,11 @@ echo Waiting for archiving and deployments...
 
 :: Spawn new processes to do this in parallel
 (
-    START "Archiving Behaviour Pack..." archive.bat %packname%, BP, mcaddon
-    START "Archiving Resource Pack..." archive.bat %packname%, RP, mcpack
-    
     START "Deploying Behaviour Pack..." deploy.bat %packname%, BP, %BPtarget%
     START "Deploying Resource Pack..." deploy.bat %packname%, RP, %RPtarget%
 ) | PAUSE > NUL
+
+START %serverStart%
 
 echo Build complete!
 EXIT /B %ERRORLEVEL%

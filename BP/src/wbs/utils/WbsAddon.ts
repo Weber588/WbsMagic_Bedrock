@@ -57,9 +57,9 @@ export abstract class WbsAddon {
             return;
         }
 
-        this.onStart();
-
         mc.system.run(() => {
+            this.onStart();
+
             this._startingTick = mc.system.currentTick;
             this.log(`${this.name} started on tick ${this.startingTick}!`, LoggingLevel.INFO);
             this.tick();
@@ -70,7 +70,7 @@ export abstract class WbsAddon {
         this.onTick(mc.system.currentTick);
 
         try {
-            mc.system.run(this.tick);
+            mc.system.run(this.tick.bind(this));
         } catch (e) {
             WbsAddon.log(`Exception while trying to loop on tick ${mc.system.currentTick}: ${e}\n&&\n${JSON.stringify(e)}`, LoggingLevel.ERROR);
         }

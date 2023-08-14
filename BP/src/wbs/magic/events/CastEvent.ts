@@ -1,11 +1,14 @@
 import { Cancellable } from "./Cancellable";
 import { TypeUtil } from "../../utils/TypeUtil";
+import { EventSignal } from "./EventSignal";
 
 export class CastEvent<T> {
-    private readonly subscribeMethod: (event: (event: any) => void) => void;
+    private readonly eventSignal: EventSignal<T>;
+    public readonly id: string;
 
-    constructor(subscribeMethod: (event: (event: T) => void) => void) {
-        this.subscribeMethod = subscribeMethod;
+    constructor(id: string, eventSignal: EventSignal<T>) {
+        this.id = id;
+        this.eventSignal = eventSignal;
     }
 
     private subscriptions: ((event: T) => void)[] = [];
@@ -22,16 +25,14 @@ export class CastEvent<T> {
     }
 
     public register() {
-        this.subscribeMethod(this.onEvent);
-    }
+        this.eventSignal.subscribe((event: T) => {
+            for (const subscription of this.subscriptions) {
+                if (TypeUtil.is<Cancellable>(event, 'cancel') && event.cancel) {
+                    break;
+                }
 
-    protected onEvent(event: T) {
-        for (const subscription of this.subscriptions) {
-            if (TypeUtil.is<Cancellable>(event, 'cancel') && event.cancel) {
-                break;
+                subscription(event);
             }
-
-            subscription(event);
-        }
+        });
     }
 }

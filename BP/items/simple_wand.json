@@ -1,36 +1,80 @@
 {
-  "format_version": "1.20.100",
+  "format_version": "1.20.0",
   "minecraft:item": {
     "description": {
-      "identifier": "wbsmagic:simple_wand",
-      "category": "equipment"
+      "identifier": "wbsmagic:simple_wand"
     },
     "components": {
-			"minecraft:display_name": {
-				"value": "Simple Wand\n§o§7Unattuned§r"
-			},
+      // Aesthetic components
+      "minecraft:hover_text_color": "light_purple",
+      "minecraft:creative_category": {
+        "category": "items"
+      },
+      "minecraft:display_name": {
+        "value": "Simple Wand\n§o§7Unattuned§r"
+      },
       "minecraft:hand_equipped": true,
       "minecraft:icon": {
         "texture": "wbsmagic_simple_wand"
       },
-      "minecraft:use_duration": 15,
-      "minecraft:hover_text_color": "light_purple",
+      "minecraft:use_animation": "bow",
+      // Functionality components
+      "minecraft:durability": {
+        "max_durability": 1024
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:can_destroy_in_creative": false,
+      "minecraft:use_duration": 1.5,
       "minecraft:chargeable": {
         "movement_modifier": 0.75,
-        "on_complete": "cast"
+        "on_completed": {
+          "event": "cast"
+        }
       },
-      "minecraft:cooldown":{
-        "category" : "wbsmagic:cast",
-        "duration" : 0.2
-    }
+      "minecraft:on_use_on": {
+        "on_use_on": {
+          "condition": "query.has_target",
+          "event": "cast"
+        }
+      }
     },
     "events": {
+      "wbsmagic:cast": {
+        "shoot": {
+          "projectile": "arrow",
+          "launch_power": 2
+        },
+        "teleport": {
+          "land_on_block": true,
+          "avoid_water": true,
+          "max_range": [
+            5,
+            5,
+            5
+          ]
+        },
+        "run_command": {
+          "target": "self",
+          "command": "say Cast event thrown (namedspaced)."
+        }
+      },
       "cast": {
-        "condition": "query.remaining_durability > 0",
-        "damage": {
-          "type": "none",
-          "amount": 1,
-          "target": "self"
+        "shoot": {
+          "projectile": "arrow",
+          "launch_power": 2
+        },
+        "teleport": {
+          "land_on_block": true,
+          "avoid_water": true,
+          "max_range": [
+            5,
+            5,
+            5
+          ]
+        },
+        "run_command": {
+          "target": "self",
+          "command": "say Cast event thrown."
         }
       }
     }
